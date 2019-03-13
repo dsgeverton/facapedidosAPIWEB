@@ -1,0 +1,4 @@
+GitRepositoriesView.GitDirectories=/home/evertongoncalves/workspace/springtools/facapedidosAPIREST/.git\:/home/evertongoncalves/workspace/springtools/GestaoFesta-Spring/.git\:
+GitRepositoriesView.GitDirectories.relative=facapedidosAPIREST/.git\:GestaoFesta-Spring/.git\:
+core_autoIgnoreDerivedResources=false
+eclipse.preferences.version=1

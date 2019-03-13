@@ -1,0 +1,67 @@
+package br.com.codever.model;
+
+import java.io.Serializable;
+import java.util.Set;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="TB_Venda")
+public class CarrinhoCompras implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private long id;
+	
+	@ManyToMany
+	@JoinTable(name = "carrinho_produtos", 
+	joinColumns = @JoinColumn(name="carrinho_id"),
+	inverseJoinColumns = @JoinColumn(name="produto_id"))
+	private Set<Produto> produtos;
+
+	private float subtotal;
+	
+	private boolean compra_aprovada;
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public Set<Produto> getProdutos() {
+		return produtos;
+	}
+
+	public void setProdutos(Set<Produto> produtos) {
+		this.produtos = produtos;
+	}
+
+	public float getSubtotal() {
+		return subtotal;
+	}
+
+	public void setSubtotal(float subtotal) {
+		this.subtotal = subtotal;
+	}
+
+	public boolean isCompra_aprovada() {
+		return compra_aprovada;
+	}
+
+	public void setCompra_aprovada(boolean compra_aprovada) {
+		this.compra_aprovada = compra_aprovada;
+	}
+	
+}

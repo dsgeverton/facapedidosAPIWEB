@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="LayoutPadrao">
+
+<section layout:fragment="Conteudo">
+
+	
+	<div class="panel panel-default" style="margin: 10px">
+		<div class="panel-heading">
+			<h1 class="panel-title">Lista de Produtos</h1>
+		</div>
+		<div class="panel-body">
+			<form class="form-inline" method="POST" th:object="${produto}"
+			      th:action="@{/produtos}"  style="margin: 20px 0">
+			      <div class="form-group">
+			      	<input type="hidden" th:field="*{id}" />
+			      	<input type="text" th:field="*{nome}" class="form-control" placeholder="Nome" />
+			      	<input type="text" th:field="*{valor}" class="form-control" placeholder="Valor" />
+			      	<input type="text" th:field="*{quantidade}" class="form-control" placeholder="Quantidade" />
+			      	<input type="text" th:field="*{imageURL}" class="form-control" placeholder="Imagem" />
+			      	<select th:field="*{carrinho}">
+						<option value="">Selecione o carrinho</option>
+						<option th:each="c : ${carrinho}" th:value="${c.id}" th:text="${c.descricao}" selected="selected"></option>
+					</select>
+					<button type="submit" class="btn btn-primary">Salvar</button>
+			      </div>
+			 </form>
+
+			
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Nome</th>
+						<th>Valor</th>
+						<th>Quantidade</th>
+						<th>Carrinho</th>
+
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="p : ${produtos}">
+						<td th:text="${p.id}">1111</td>
+						<td th:text="${p.nome}">Teclado</td>
+						<td th:text="${p.valor}">300</td>
+						<td th:text="${p.quantidade}">3</td>
+						<td th:text="${p.carrinho}">3</td>
+						<td>
+							<a th:href="@{/produtos/alterar/}+${p.id}" 
+						    class="glyphicon glyphicon-pencil">
+							</a>
+							<a class="btn btn-link btn-xs" data-toggle="modal" data-target="#confirmacaoExclusaoModal"
+		   								th:attr="data-id=${p.id}, data-name=${p.nome}, data-model='produto' "
+		   								title="Excluir" rel="tooltip" data-placement="top">
+		   							<span class="glyphicon glyphicon-remove"></span>
+		   					</a>
+		   					<a class="btn btn-link btn-xs" data-toggle="modal" data-target="#uploadModal"
+		   								th:attr="data-id=${p.id}, data-model='produto' "
+		   								title="Incluir Imagem do Produto" rel="tooltip" data-placement="top">
+		   							<span class="glyphicon glyphicon-picture"></span>
+		   					</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div  th:replace="fragments/exclusao :: exclusao"> </div>
+	<div  th:replace="fragments/upload :: upload"> </div>
+</section>
+
+</html>

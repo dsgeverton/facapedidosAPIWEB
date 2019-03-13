@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="LayoutPadrao">
+
+<section layout:fragment="Conteudo">
+	<div class="panel panel-default" style="margin: 10px">
+		<div class="panel-heading">
+			<h1 class="panel-title">Lista de Carrinhos</h1>
+		</div>
+		<div class="panel-body">
+			<form class="form-inline" method="POST" 
+			    th:object="${carrinho}"
+			    th:action="@{/carrinhos}"
+				style="margin: 20px 0">
+				<div class="form-group">
+					<input type="hidden" th:field="*{id}">
+					<input type="text" class="form-control" placeholder="Descrição"
+						th:field="*{descricao}" /> 
+					<button type="submit" class="btn btn-primary">Adicionar</button>
+				</div>
+			</form>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>Descrição</th>
+						<th colspan=2> Ação </th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="carrinho : ${carrinhos}">
+						<td th:text="${carrinho.id}">Teste 1</td>
+						<td th:text="${carrinho.descricao}">Teste 1</td>
+						
+						<td>
+						<a th:href="@{/carrinhos/alterar/}+${carrinho.id}" class="glyphicon glyphicon-pencil"> </a>
+						</td>
+						<td>
+						<a th:href="@{/carrinhos/excluir/}+${carrinho.id}" 
+						   class="glyphicon glyphicon-trash"> </a>
+						</td>		
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</section>
+</html> 
