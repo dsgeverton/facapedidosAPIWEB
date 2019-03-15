@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import br.com.codever.model.Carrinho;
 import br.com.codever.model.Produto;
 import br.com.codever.model.Upload;
+import br.com.codever.repository.CarrinhoRepository;
 import br.com.codever.repository.ProdutoRepository;
 import br.com.codever.repository.Uploads;
 
@@ -26,6 +28,9 @@ public class ProdutoController {
 	@Autowired
 	ProdutoRepository produtoRepository;
 
+	@Autowired
+	CarrinhoRepository carrinhoRepository;
+	
 	@Autowired 
 	Uploads uploads;
 
@@ -34,15 +39,19 @@ public class ProdutoController {
 		ModelAndView mv = new ModelAndView("ListaProdutos.html");
 		mv.addObject(new Produto());
 		mv.addObject(new Upload());
+		mv.addObject("carrinhos", carrinhoRepository.findAll());
 		mv.addObject("produtos",produtoRepository.findAll());
 		return mv;
 	}
 
 	@RequestMapping(value="",method=RequestMethod.POST)
 	public String gravar(Produto p) {
+		Carrinho c = new Carrinho();
+		c = carrinhoRepository.getOne(p.getCarrinho().getId());
+		c.setSubtotal(c.getSubtotal()+p.getValor());
 		produtoRepository.save(p);
 		return "redirect:/produtos";
-	}
+	}	
 
 	@RequestMapping(value="alterar/{id}")
 	public ModelAndView alterar(@PathVariable Long id) {
@@ -50,6 +59,7 @@ public class ProdutoController {
 		Produto festa = produtoRepository.getOne(id);
 		mv.addObject(festa);
 		mv.addObject(new Upload());
+		mv.addObject("carrinhos", carrinhoRepository.findAll());
 		mv.addObject("produtos",produtoRepository.findAll());
 		return mv;
 	}

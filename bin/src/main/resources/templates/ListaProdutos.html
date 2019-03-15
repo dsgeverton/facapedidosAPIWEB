@@ -46,8 +46,7 @@
 						<td th:text="${p.nome}">Teclado</td>
 						<td th:text="${p.valor}">300</td>
 						<td th:text="${p.quantidade}">3</td>
-						<td th:if="${p.carrinho}" th:text="${p.carrinho.descricao}">3</td>
-						<td th:unless="${p.carrinho}">Nenhum carrinho registrado</td>
+						<td th:text="${p.carrinho}">3</td>
 						<td>
 							<a th:href="@{/produtos/alterar/}+${p.id}" 
 						    class="glyphicon glyphicon-pencil">

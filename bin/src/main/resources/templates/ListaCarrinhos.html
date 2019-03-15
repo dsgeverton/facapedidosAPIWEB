@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="LayoutPadrao">
+
+<section layout:fragment="Conteudo">
+	
+	<div class="panel panel-default" style="margin: 10px">
+		<div class="panel-heading">
+			<h1 class="panel-title">Lista de carrinhos</h1>
+		</div>
+		<div class="panel-body">
+			<form class="form-inline" method="POST" th:object="${carrinho}"
+			      th:action="@{/carrinhos}"  style="margin: 20px 0">
+			      <div class="form-group">
+			      	<input type="hidden" th:field="*{id}" />
+			      	<input type="text" th:field="*{descricao}" class="form-control" placeholder="Descrição" />
+			      	<input type="hidden" th:field="*{compra_aprovada}" value="false" class="form-control" placeholder="aprovada" />
+			      	<button type="submit" class="btn btn-primary">Salvar</button>
+			      </div>
+			 </form>
+
+			
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Descrição</th>
+						<th>Subtotal</th>
+						<th>Compra Aprovada</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="c : ${carrinhos}">
+						<td th:text="${c.id}">0124</td>
+						<td th:text="${c.descricao}">Carrinho de Teste</td>
+						<td th:text="${c.subtotal}">3</td>						
+						<td th:text="${c.compra_aprovada}">1</td>						
+						<td>
+							<a th:href="@{/carrinhos/alterar/}+${c.id}" 
+						    class="glyphicon glyphicon-pencil">
+							</a>
+							<a class="btn btn-link btn-xs" data-toggle="modal" data-target="#confirmacaoExclusaoModal"
+		   								th:attr="data-id=${c.id}, data-name=${c.descricao}, data-model='carrinho' "
+		   								title="Excluir" rel="tooltip" data-placement="top">
+		   							<span class="glyphicon glyphicon-remove"></span>
+		   					</a>
+							
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div  th:replace="fragments/exclusao :: exclusao"> </div>
+	
+</section>
+
+
+</html>
